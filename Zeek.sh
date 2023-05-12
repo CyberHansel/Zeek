@@ -76,9 +76,9 @@ fi
 ### Edit /etc/suricata/suricata.yaml #########
 ##############################################
 
-#!/bin/bash
-
 sed -i 's/HOME_NET: "\[192\.168\.0\.0\/16,10\.0\.0\.0\/8,172\.16\.0\.0\/12\]"/HOME_NET: "\[192.168.1.103\/24\]"/g' /etc/suricata/suricata.yaml
+sed -i 's/interface: eth0/interface: wlp2s0/g' /etc/suricata/suricata.yaml
+sed -i 's/community-id: false/community-id: true/g' /etc/suricata/suricata.yaml
 
 
 
