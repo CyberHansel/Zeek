@@ -32,7 +32,7 @@ ret=$?
 if [ $ret -eq 0 ]; then
   echo "Recomended packages installed successfully"
 else
-  echo "Failed to install the following packages:"
+  echo "Failed to install the following Recomended packages:"
   for package in "${packages[@]}"; do
     if ! dpkg -s "$package" >/dev/null 2>&1; then
       echo "- $package"
@@ -52,13 +52,23 @@ apt-get update && apt-get install -y "${packages2[@]}"
 ret=$?
 # Check if the installation was successful
 if [ $ret -eq 0 ]; then
-  echo "Second set of packages installed successfully"
+  echo "Iptables set of packages installed successfully"
 else
-  echo "Failed to install the following packages:"
+  echo "Failed to install the following Iptables packages:"
   for package in "${packages2[@]}"; do
     if ! dpkg -s "$package" >/dev/null 2>&1; then
       echo "- $package"
     fi
   done
+fi
+#Installing Suricata
+sudo add-apt-repository ppa:oisf/suricata-stable
+sudo apt-get update
+sudo apt-get install suricata
+
+if [ $? -eq 0 ]; then
+    echo "Suricata was installed successfully."
+else
+    echo "Suricata installation failed."
 fi
 
