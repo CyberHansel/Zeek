@@ -92,10 +92,11 @@ suricata-update enable-source oisf/trafficid
 suricata-update
 suricata-update enable-source et/open
 suricata-update
+suricata -T -c /etc/suricata/suricata.yaml -v
+systemctl enable suricata.service
+systemctl start suricata.service
 
-
-
-sed -i 's/^#*default-rule-path:.*/default-rule-path: \/etc\/suricata\/rules/' /etc/suricata/suricata.yaml
+#sed -i 's/^#*default-rule-path:.*/default-rule-path: \/etc\/suricata\/rules/' /etc/suricata/suricata.yaml
 
 
 
