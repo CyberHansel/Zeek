@@ -92,6 +92,7 @@ suricata-update enable-source oisf/trafficid
 suricata-update
 suricata-update enable-source et/open
 suricata-update
+suricata-update -o /etc/suricata/rules
 suricata -T -c /etc/suricata/suricata.yaml -v
 systemctl enable suricata.service
 systemctl start suricata.service
