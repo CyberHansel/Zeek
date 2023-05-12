@@ -79,6 +79,9 @@ fi
 sed -i 's/HOME_NET: "\[192\.168\.0\.0\/16,10\.0\.0\.0\/8,172\.16\.0\.0\/12\]"/HOME_NET: "\[192.168.1.103\/24\]"/g' /etc/suricata/suricata.yaml
 sed -i 's/interface: eth0/interface: wlp2s0/g' /etc/suricata/suricata.yaml
 sed -i 's/community-id: false/community-id: true/g' /etc/suricata/suricata.yaml
+echo "detect-engine:" | sudo tee -a /etc/suricata/suricata.yaml > /dev/null
+echo "  - rule-reload: true" | sudo tee -a /etc/suricata/suricata.yaml > /dev/null
+sed -i 's/^#*default-rule-path:.*/default-rule-path: \/etc\/suricata\/rules/' /etc/suricata/suricata.yaml
 suricata-update
 suricata-update enable-source malsilo/win-malware
 suricata-update
@@ -93,13 +96,43 @@ suricata-update
 suricata-update enable-source et/open
 suricata-update
 suricata-update -o /etc/suricata/rules
+
+#############################################
+### TO SET SURICATA AS IPS ##################
+### IN   /etc/default/suricata    file ######
+#############################################
+
+sudo sed -i.bak 's/^LISTENMODE=af-packet/#&/' /etc/default/suricata
+sudo sed -i '/^#LISTENMODE=af-packet/a LISTENMODE=nfqueue' /etc/default/suricata
+https://www.criticaldesign.net/post/how-to-setup-a-suricata-ips
+
+
+
+
+
+
+
+
+
+#############################################
+
 suricata -T -c /etc/suricata/suricata.yaml -v
 systemctl enable suricata.service
 systemctl start suricata.service
 
-#sed -i 's/^#*default-rule-path:.*/default-rule-path: \/etc\/suricata\/rules/' /etc/suricata/suricata.yaml
 
 
+
+
+######### TO TEST RULESETS #####################
+
+#curl http://testmynids.org/uid/index.html
+#grep 2100498 /var/log/suricata/fast.log
+
+#sudo apt install jq
+#jq 'select(.alert .signature=="GPL ATTACK_RESPONSE id check returned root")' /var/log/suricata/eve.json
+#/var/log/suricata/eve.json    logs same event but in JSON
+#jq 'select(.alert .signature_id==2100498)' /var/log/suricata/eve.json
 
 
 
