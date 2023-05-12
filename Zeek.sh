@@ -79,6 +79,23 @@ fi
 sed -i 's/HOME_NET: "\[192\.168\.0\.0\/16,10\.0\.0\.0\/8,172\.16\.0\.0\/12\]"/HOME_NET: "\[192.168.1.103\/24\]"/g' /etc/suricata/suricata.yaml
 sed -i 's/interface: eth0/interface: wlp2s0/g' /etc/suricata/suricata.yaml
 sed -i 's/community-id: false/community-id: true/g' /etc/suricata/suricata.yaml
+suricata-update
+suricata-update enable-source malsilo/win-malware
+suricata-update
+suricata-update enable-source tgreen/hunting
+suricata-update
+suricata-update enable-source etnetera/aggressive
+suricata-update
+suricata-update enable-source sslbl/ssl-fp-blacklist
+suricata-update
+suricata-update enable-source oisf/trafficid
+suricata-update
+suricata-update enable-source et/open
+suricata-update
+
+
+
+sed -i 's/^#*default-rule-path:.*/default-rule-path: \/etc\/suricata\/rules/' /etc/suricata/suricata.yaml
 
 
 
