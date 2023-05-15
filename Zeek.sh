@@ -104,7 +104,7 @@ suricata-update -o /etc/suricata/rules
 
 sudo sed -i.bak 's/^LISTENMODE=af-packet/#&/' /etc/default/suricata
 sudo sed -i '/^#LISTENMODE=af-packet/a LISTENMODE=nfqueue' /etc/default/suricata
-sed -i 's/IFACE=eth0/IFACE=wlp2s0/' /etc/default/suricata/
+sed -i 's/IFACE=eth0/IFACE=wlp2s0/' /etc/default/suricata
 
 sudo sed -i '/# end of filter rules/ i # Suricata\n-I INPUT -j NFQUEUE\n-I OUTPUT -j NFQUEUE' /etc/ufw/before.rules
 sudo ufw enable
